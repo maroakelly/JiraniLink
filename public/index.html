@@ -368,14 +368,14 @@
             <div class="feed-panel">
                 <h3>Recent Messages</h3>
                 <div id="messages">
-                    <p class="empty">Waiting for community messages...</p>
+                    <p class="empty">Loading community messages...</p>
                 </div>
             </div>
 
             <div class="feed-panel">
                 <h3>Help Requests</h3>
                 <div id="requests">
-                    <p class="empty">No help requests received yet.</p>
+                    <p class="empty">Loading help requests...</p>
                 </div>
             </div>
         </section>
@@ -459,11 +459,79 @@
             document.getElementById("helpCategory").value = "";
         });
 
-        socket.on("chat message", (data) => {
-            addFeedItem(messages, data.name, data.text, data.time, "Community message");
+        // Display previously saved chat messages.
+        socket.on("chat history", (history) => {
+            if (!Array.isArray(history)) return;
 
-            if (notificationsEnabled && data.name !==
-                document.getElementById("chatName").value.trim()) {
+            messages.replaceChildren();
+
+            if (history.length === 0) {
+                const empty = document.createElement("p");
+                empty.className = "empty";
+                empty.textContent = "No community messages yet.";
+                messages.appendChild(empty);
+                return;
+            }
+
+            // The server sends history oldest first.
+            // Reverse it because addFeedItem places new items at the top.
+            [...history].reverse().forEach((data) => {
+                addFeedItem(
+                    messages,
+                    data.name,
+                    data.text,
+                    data.time,
+                    "Community message"
+                );
+            });
+        });
+
+        // Display previously saved help requests.
+        socket.on("help history", (history) => {
+            if (!Array.isArray(history)) return;
+
+            requests.replaceChildren();
+
+            if (history.length === 0) {
+                const empty = document.createElement("p");
+                empty.className = "empty";
+                empty.textContent = "No help requests yet.";
+                requests.appendChild(empty);
+                return;
+            }
+
+            [...history].reverse().forEach((data) => {
+                addFeedItem(
+                    requests,
+                    data.name,
+                    data.text,
+                    data.time,
+                    "Category: " + (data.category || "Other")
+                );
+            });
+        });
+
+        socket.on("database error", (data) => {
+            alert(
+                data && data.message
+                    ? data.message
+                    : "A database error occurred. Please try again."
+            );
+        });
+
+        socket.on("chat message", (data) => {
+            addFeedItem(
+                messages,
+                data.name,
+                data.text,
+                data.time,
+                "Community message"
+            );
+
+            if (
+                notificationsEnabled &&
+                data.name !== document.getElementById("chatName").value.trim()
+            ) {
                 new Notification("New JiraniLink message", {
                     body: data.name + ": " + data.text
                 });
@@ -486,6 +554,10 @@
             }
         });
 
+        socket.on("connect_error", () => {
+            status.textContent = "○ Unable to connect to server";
+        });
+
         notificationButton.addEventListener("click", async () => {
             if (!("Notification" in window)) {
                 alert("Browser notifications are not supported by this browser.");
@@ -498,11 +570,14 @@
                 notificationsEnabled = true;
                 notificationButton.textContent = "Notifications Enabled";
                 notificationButton.disabled = true;
+
                 new Notification("JiraniLink", {
                     body: "Community notifications are now enabled."
                 });
             } else {
-                alert("Notifications were not enabled. You can still use JiraniLink normally.");
+                alert(
+                    "Notifications were not enabled. You can still use JiraniLink normally."
+                );
             }
         });
     </script>
