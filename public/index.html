@@ -4,264 +4,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JiraniLink | Community Support Network</title>
-
+    <title>JiraniLink | Community Support</title>
     <style>
+        :root {
+            --primary: #087f8c;
+            --dark: #07545b;
+            --light: #e9f8f7;
+            --background: #f4f7fb;
+            --text: #243447;
+            --muted: #64748b;
+            --white: #ffffff;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f1f5f9;
-            color: #1e293b;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
         }
 
         header {
-            background: #0f766e;
+            background: linear-gradient(135deg, #07545b, #0b9ba5);
             color: white;
-            text-align: center;
-            padding: 28px 15px;
+            padding: 25px 20px;
         }
 
-        header h1 {
-            margin: 0 0 8px;
-            font-size: 34px;
+        .header-content {
+            max-width: 1100px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        header p {
+        .brand {
             margin: 0;
+            font-size: 29px;
+        }
+
+        .tagline {
+            margin: 6px 0 0;
+            color: #e0f7f7;
         }
 
         .status {
-            margin-top: 12px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            padding: 10px 14px;
+            font-size: 13px;
+        }
+
+        nav {
+            background: white;
+            padding: 13px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px #0000000d;
+        }
+
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 14px;
             font-size: 14px;
-            color: #d1fae5;
+        }
+
+        nav a:hover {
+            color: var(--primary);
         }
 
         main {
-            max-width: 1050px;
-            margin: 25px auto;
-            padding: 0 15px;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 18px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+
+        .welcome p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .cards {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
         }
 
-        .panel {
+        .card {
             background: white;
-            border-radius: 12px;
-            padding: 22px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            padding: 23px;
+            box-shadow: 0 5px 20px #17324d0c;
+            border: 1px solid #e5edf3;
+            min-width: 0;
         }
 
-        h2 {
-            color: #0f766e;
+        .card h3 {
             margin-top: 0;
+            font-size: 20px;
         }
 
-        input, textarea {
+        .description {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin: 15px 0 7px;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
             width: 100%;
             padding: 12px;
-            margin: 7px 0 12px;
             border: 1px solid #cbd5e1;
-            border-radius: 7px;
+            border-radius: 9px;
             font: inherit;
+            background: white;
+            color: var(--text);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: 2px solid #83d4d8;
+            border-color: var(--primary);
         }
 
         textarea {
             resize: vertical;
-            min-height: 85px;
+            min-height: 95px;
         }
 
         button {
-            background: #0f766e;
-            color: white;
             border: none;
-            border-radius: 7px;
-            padding: 12px 18px;
+            border-radius: 9px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 17px;
+            margin-top: 14px;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
-            font-weight: bold;
         }
 
         button:hover {
-            background: #115e59;
+            background: var(--dark);
         }
 
-        .messages {
-            list-style: none;
-            padding: 0;
-            margin: 15px 0 0;
-            max-height: 300px;
-            overflow-y: auto;
+        .secondary-button {
+            background: #e3f5f5;
+            color: var(--dark);
         }
 
-        .messages li {
-            background: #f0fdfa;
-            border-left: 4px solid #0f766e;
-            padding: 12px;
-            margin-bottom: 9px;
-            border-radius: 5px;
+        .secondary-button:hover {
+            background: #ccecec;
+        }
+
+        .section-title {
+            margin: 32px 0 15px;
+        }
+
+        .feed {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .feed-panel {
+            background: white;
+            border: 1px solid #e5edf3;
+            border-radius: 14px;
+            padding: 20px;
+            min-width: 0;
+        }
+
+        .feed-panel h3 {
+            margin-top: 0;
+        }
+
+        .feed-item {
+            border-left: 4px solid var(--primary);
+            background: #f7fbfc;
+            padding: 13px;
+            border-radius: 7px;
+            margin: 12px 0;
             overflow-wrap: anywhere;
         }
 
-        .time {
-            display: block;
-            color: #64748b;
-            font-size: 12px;
-            margin-top: 5px;
+        .feed-item p {
+            margin: 8px 0;
+            white-space: pre-wrap;
         }
 
-        .help li {
-            background: #fff7ed;
-            border-left-color: #ea580c;
+        .feed-meta {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .empty {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .notification-area {
+            margin-top: 25px;
+            padding: 18px;
+            background: var(--light);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .notification-area p {
+            margin: 5px 0;
+            color: var(--dark);
+            font-size: 14px;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            color: #64748b;
+            padding: 25px 15px;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 25px;
         }
 
         @media (max-width: 700px) {
-            main {
+            .cards, .feed {
                 grid-template-columns: 1fr;
             }
 
-            header h1 {
-                font-size: 28px;
+            .brand {
+                font-size: 25px;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 7px;
+            }
+
+            main {
+                margin-top: 20px;
             }
         }
     </style>
 </head>
-
 <body>
     <header>
-        <h1>JiraniLink</h1>
-        <p>Connecting Neighbours. Supporting Communities.</p>
-        <div class="status" id="status">Connecting to server...</div>
+        <div class="header-content">
+            <div>
+                <h1 class="brand">🤝 JiraniLink</h1>
+                <p class="tagline">Connecting neighbours. Strengthening communities.</p>
+            </div>
+            <div class="status" id="connectionStatus">
+                Connecting to server...
+            </div>
+        </div>
     </header>
 
+    <nav>
+        <a href="#chat">Community Chat</a>
+        <a href="#help">Request Help</a>
+        <a href="#community">Community Updates</a>
+    </nav>
+
     <main>
-        <section class="panel">
-            <h2>Community Chat</h2>
-            <p>Share information and communicate with your neighbours.</p>
-
-            <form id="chatForm">
-                <label for="chatName">Your name</label>
-                <input id="chatName" maxlength="30"
-                    placeholder="Enter your name" required>
-
-                <label for="chatText">Your message</label>
-                <textarea id="chatText" maxlength="500"
-                    placeholder="Write a message..." required></textarea>
-
-                <button type="submit">Send Message</button>
-            </form>
-
-            <h3>Recent Messages</h3>
-            <ul class="messages" id="messages"></ul>
+        <section class="welcome">
+            <h2>Welcome to your community</h2>
+            <p>
+                JiraniLink helps neighbours communicate, share information,
+                and request support. Use the chat to talk with community
+                members or submit a request when you need assistance.
+            </p>
         </section>
 
-        <section class="panel">
-            <h2>Request Community Help</h2>
-            <p>Ask for assistance or let neighbours know how they can help.</p>
+        <section class="cards">
+            <div class="card" id="chat">
+                <h3>💬 Community Chat</h3>
+                <p class="description">
+                    Share announcements, ideas, and helpful information
+                    with connected community members.
+                </p>
 
-            <form id="helpForm">
-                <label for="helpName">Your name</label>
-                <input id="helpName" maxlength="30"
-                    placeholder="Enter your name" required>
+                <form id="chatForm">
+                    <label for="chatName">Your name</label>
+                    <input id="chatName" maxlength="30"
+                        placeholder="Enter your name" required>
 
-                <label for="helpText">Describe the help needed</label>
-                <textarea id="helpText" maxlength="300"
-                    placeholder="Example: I need help carrying supplies..."
-                    required></textarea>
+                    <label for="chatText">Your message</label>
+                    <textarea id="chatText" maxlength="500"
+                        placeholder="Write your message..." required></textarea>
 
-                <button type="submit">Post Help Request</button>
-            </form>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
 
-            <h3>Community Help Requests</h3>
-            <ul class="messages help" id="requests"></ul>
+            <div class="card" id="help">
+                <h3>🫶 Request Community Help</h3>
+                <p class="description">
+                    Let the community know what assistance you need.
+                    Choose a category to help others understand your request.
+                </p>
+
+                <form id="helpForm">
+                    <label for="helpName">Your name</label>
+                    <input id="helpName" maxlength="30"
+                        placeholder="Enter your name" required>
+
+                    <label for="helpCategory">Help category</label>
+                    <select id="helpCategory" required>
+                        <option value="">Choose a category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Education">Education</option>
+                        <option value="Shelter">Shelter</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <label for="helpText">Describe the help needed</label>
+                    <textarea id="helpText" maxlength="300"
+                        placeholder="Explain what support you need..."
+                        required></textarea>
+
+                    <button type="submit">Submit Help Request</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="notification-area">
+            <div>
+                <strong>🔔 Community Notifications</strong>
+                <p>Choose whether this browser can show notifications.</p>
+            </div>
+            <button class="secondary-button" id="notificationButton"
+                type="button">Enable Notifications</button>
+        </section>
+
+        <h2 class="section-title" id="community">Community Updates</h2>
+
+        <section class="feed">
+            <div class="feed-panel">
+                <h3>Recent Messages</h3>
+                <div id="messages">
+                    <p class="empty">Waiting for community messages...</p>
+                </div>
+            </div>
+
+            <div class="feed-panel">
+                <h3>Help Requests</h3>
+                <div id="requests">
+                    <p class="empty">No help requests received yet.</p>
+                </div>
+            </div>
         </section>
     </main>
 
     <footer>
-        JiraniLink Community Support Network
-        <br>
-        Working together makes our communities stronger.
+        <p>JiraniLink — Building stronger communities through communication.</p>
+        <p>Be respectful. Do not share passwords or sensitive personal information.</p>
     </footer>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
 
-        const status = document.getElementById("status");
+        const status = document.getElementById("connectionStatus");
         const messages = document.getElementById("messages");
         const requests = document.getElementById("requests");
+        const notificationButton =
+            document.getElementById("notificationButton");
+
+        let notificationsEnabled = false;
 
         socket.on("connect", () => {
-            status.textContent = "Connected to JiraniLink server";
+            status.textContent = "● Connected to server";
         });
 
         socket.on("disconnect", () => {
-            status.textContent = "Disconnected. Reconnecting...";
+            status.textContent = "○ Disconnected — reconnecting...";
         });
 
-        function addItem(list, name, text, time) {
-            const item = document.createElement("li");
-            const heading = document.createElement("strong");
-            const content = document.createElement("div");
-            const timestamp = document.createElement("span");
+        function addFeedItem(container, name, text, time, extra) {
+            const empty = container.querySelector(".empty");
+            if (empty) empty.remove();
 
+            const item = document.createElement("div");
+            item.className = "feed-item";
+
+            const heading = document.createElement("strong");
             heading.textContent = name;
-            content.textContent = text;
-            timestamp.textContent = time;
-            timestamp.className = "time";
+
+            const detail = document.createElement("p");
+            detail.textContent = text;
+
+            const meta = document.createElement("div");
+            meta.className = "feed-meta";
+            meta.textContent = (extra ? extra + " • " : "") + (time || "");
 
             item.appendChild(heading);
-            item.appendChild(content);
-            item.appendChild(timestamp);
+            item.appendChild(detail);
+            item.appendChild(meta);
+            container.prepend(item);
 
-            list.prepend(item);
+            while (container.children.length > 30) {
+                container.lastElementChild.remove();
+            }
         }
 
-        document.getElementById("chatForm")
-            .addEventListener("submit", (event) => {
-                event.preventDefault();
+        document.getElementById("chatForm").addEventListener("submit", (event) => {
+            event.preventDefault();
 
-                const name =
-                    document.getElementById("chatName").value.trim();
-                const text =
-                    document.getElementById("chatText").value.trim();
+            const name = document.getElementById("chatName").value.trim();
+            const text = document.getElementById("chatText").value.trim();
 
-                if (!name || !text) return;
+            if (!name || !text) return;
 
-                socket.emit("chat message", { name, text });
-                document.getElementById("chatText").value = "";
-            });
+            socket.emit("chat message", { name, text });
+            document.getElementById("chatText").value = "";
+        });
 
-        document.getElementById("helpForm")
-            .addEventListener("submit", (event) => {
-                event.preventDefault();
+        document.getElementById("helpForm").addEventListener("submit", (event) => {
+            event.preventDefault();
 
-                const name =
-                    document.getElementById("helpName").value.trim();
-                const text =
-                    document.getElementById("helpText").value.trim();
+            const name = document.getElementById("helpName").value.trim();
+            const text = document.getElementById("helpText").value.trim();
+            const category = document.getElementById("helpCategory").value;
 
-                if (!name || !text) return;
+            if (!name || !text || !category) return;
 
-                socket.emit("help request", { name, text });
-                document.getElementById("helpText").value = "";
-            });
+            socket.emit("help request", { name, text, category });
+            document.getElementById("helpText").value = "";
+            document.getElementById("helpCategory").value = "";
+        });
 
         socket.on("chat message", (data) => {
-            addItem(messages, data.name, data.text, data.time);
+            addFeedItem(messages, data.name, data.text, data.time, "Community message");
+
+            if (notificationsEnabled && data.name !==
+                document.getElementById("chatName").value.trim()) {
+                new Notification("New JiraniLink message", {
+                    body: data.name + ": " + data.text
+                });
+            }
         });
 
         socket.on("help request", (data) => {
-            addItem(requests, data.name, data.text, data.time);
+            addFeedItem(
+                requests,
+                data.name,
+                data.text,
+                data.time,
+                "Category: " + (data.category || "Other")
+            );
+
+            if (notificationsEnabled) {
+                new Notification("New community help request", {
+                    body: data.category + " — " + data.name + ": " + data.text
+                });
+            }
+        });
+
+        notificationButton.addEventListener("click", async () => {
+            if (!("Notification" in window)) {
+                alert("Browser notifications are not supported by this browser.");
+                return;
+            }
+
+            const permission = await Notification.requestPermission();
+
+            if (permission === "granted") {
+                notificationsEnabled = true;
+                notificationButton.textContent = "Notifications Enabled";
+                notificationButton.disabled = true;
+                new Notification("JiraniLink", {
+                    body: "Community notifications are now enabled."
+                });
+            } else {
+                alert("Notifications were not enabled. You can still use JiraniLink normally.");
+            }
         });
     </script>
 </body>
